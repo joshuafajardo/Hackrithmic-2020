@@ -30,9 +30,10 @@ def handle_move(move):
     board = user_ids[request.sid]
     if board.is_game_over():
         emit('move_validation', {'valid': False})
-    game_move = chess.Move(move['from_square'], move['to_square'], promotion=5)
+    game_move = chess.Move(chess.parse_square(move['from_square']), chess.parse_square(move['to_square']), promotion=5)
     if game_move in board.legal_moves:
-        emit('botMove', {'fen': random.choice(list(board.legal_moves))})
+        board.push(random.choice(list(board.legal_moves)))
+        emit('botMove', {'fen': board.fen()})
     else:
         emit('move_validation', {'valid': False})
 
