@@ -29,12 +29,15 @@ def handle_move(move):
     print(move)
     board = user_ids[request.sid]
     if board.is_game_over():
+        print('game over')
         emit('move_validation', {'valid': False})
     game_move = chess.Move(chess.parse_square(move['from_square']), chess.parse_square(move['to_square']), promotion=5)
     if game_move in board.legal_moves:
         board.push(random.choice(list(board.legal_moves)))
+        print(board.fen())
         emit('botMove', {'fen': board.fen()})
     else:
+        print('invalid move')
         emit('move_validation', {'valid': False})
 
 @socketio.on('disconnect')
