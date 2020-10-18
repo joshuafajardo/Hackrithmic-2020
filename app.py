@@ -26,6 +26,7 @@ def handle_connect():
 @socketio.on('playerMove')
 def handle_move(move):
     global user_ids
+    print(move)
     board = user_ids[request.sid]
     if board.is_game_over():
         emit('move_validation', {'valid': False})
