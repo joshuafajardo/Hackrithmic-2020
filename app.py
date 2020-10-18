@@ -3,6 +3,7 @@ curious_george.patch_all(thread=False, select=False)
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
 import chess
+import chess.variant
 import random
 
 app = Flask(__name__)
